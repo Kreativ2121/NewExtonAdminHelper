@@ -10,7 +10,7 @@ import java.net.URLConnection;
 
 public class MCDataParser {
 
-    public static void downloadMCData() throws IOException {
+    public static ServerData downloadMCData() throws IOException {
         String sURL = "https://mcapi.us/server/status?ip=s32.titanaxe.com&port=40045";
 
         URL url = new URL(sURL);
@@ -20,7 +20,8 @@ public class MCDataParser {
 
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        ServerData data = gson.fromJson(new InputStreamReader((InputStream) request.getContent()), ServerData.class);
+
+        return gson.fromJson(new InputStreamReader((InputStream) request.getContent()), ServerData.class);
     }
 
 }

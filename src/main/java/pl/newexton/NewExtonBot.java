@@ -7,12 +7,15 @@ import discord4j.core.object.entity.User;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
+import java.time.Duration;
 
 import static pl.newexton.MCDataParser.downloadMCData;
 
 public class NewExtonBot {
 
-    public static void main(String[] args) throws IOException {
+    static ServerData data = null;
+
+    public static void main(String[] args) throws IOException, InterruptedException {
         DiscordClient client = DiscordClient.create("MTA0NDAwOTE1NDMxNjA4MzI1MQ.GQIqkM.C182I02ZDQisxXzM6BJ_u6WWnXkVmfcE_NvGgc");
 
         Mono<Void> login = client.withGateway((GatewayDiscordClient gateway) ->
@@ -22,8 +25,13 @@ public class NewExtonBot {
                             System.out.printf("Logged in as %s#%s%n", self.getUsername(), self.getDiscriminator());
                         })));
 
-        downloadMCData();
+        //downloadMCData();
 
-        login.block();
+        while(true){
+            data = downloadMCData();
+            Thread.sleep(5000);
+        }
+
+
     }
 }
