@@ -9,10 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="65b6396d-1f8b-4147-b3e8-cbc7e4b51071" name="Changes" comment="Changed API to JDA.">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/NewExtonMCBot_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
+    <list default="true" id="65b6396d-1f8b-4147-b3e8-cbc7e4b51071" name="Changes" comment="Packed first version of the app to JAR.">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/NewExtonMCBot_jar/NewExtonMCBot.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/newexton/NewExtonBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/newexton/NewExtonBot.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,7 +54,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Artifacts",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
   }
@@ -68,6 +69,8 @@
   </component>
   <component name="RunManager">
     <configuration name="NewExtonBot" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="pl.newexton.NewExtonBot" />
       <module name="NewExtonMCBot" />
       <extension name="coverage">
@@ -108,7 +111,7 @@
       <workItem from="1669318418579" duration="5661000" />
       <workItem from="1669408451672" duration="902000" />
       <workItem from="1669500021025" duration="109000" />
-      <workItem from="1669553729842" duration="370000" />
+      <workItem from="1669553729842" duration="1700000" />
     </task>
     <task id="LOCAL-00001" summary="Added REST integration.">
       <created>1669156889807</created>
@@ -131,7 +134,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669248901769</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Packed first version of the app to JAR.">
+      <created>1669554125721</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1669554125721</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,7 +163,8 @@
     <MESSAGE value="Added REST integration." />
     <MESSAGE value="Added REST requests execution in a loop." />
     <MESSAGE value="Changed API to JDA." />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed API to JDA." />
+    <MESSAGE value="Packed first version of the app to JAR." />
+    <option name="LAST_COMMIT_MESSAGE" value="Packed first version of the app to JAR." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -50,6 +50,7 @@ public class NewExtonBot extends ListenerAdapter
     static ServerData mcServerData = null;
 
     public static void main(String[] args) throws IOException {
+        System.out.println("NewExtonBot uruchomiony poprawnie.");
         mcServerData = downloadMCData();
 
         JDA jda = JDABuilder.createLight("MTA0NDAwOTE1NDMxNjA4MzI1MQ.GQIqkM.C182I02ZDQisxXzM6BJ_u6WWnXkVmfcE_NvGgc", EnumSet.noneOf(GatewayIntent.class)) // slash commands don't need any intents
@@ -116,12 +117,14 @@ public class NewExtonBot extends ListenerAdapter
 //                break;
             case "minecraft":
                 try {
+                    System.out.println("Odpowiadam na żądanie /minecraft.\nPobieranie danych z API serwera...");
                     mcServerData = downloadMCData();
 //                    createTextChannel(event.getMember(),"\uD835\uDE1A\uD835\uDE26\uD835\uDE33\uD835\uDE38\uD835\uDE26\uD835\uDE33 \uD835\uDE14\uD835\uDE0A:" + mcServerData.online);
 //                    createTextChannel(event.getMember(),"Liczba graczy: " + mcServerData.players.now + "/" + mcServerData.players.max);
 
                     //FAIL
                     if(Objects.equals(mcServerData.status, "failure")){
+                        System.err.println("Nie udało się pobrać statusu serwera.");
                         String reply = "Nie udało się pobrać statusu serwera.";
                         event.reply(reply).queue();
                         break;
@@ -152,7 +155,8 @@ public class NewExtonBot extends ListenerAdapter
                         }
                     }
                     event.reply(reply.toString()).queue();
-
+                    System.out.println(reply.toString());
+                    System.out.println("Odpowiedziano na żądanie.");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
