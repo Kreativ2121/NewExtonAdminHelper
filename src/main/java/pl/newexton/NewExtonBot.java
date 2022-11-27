@@ -16,6 +16,7 @@ package pl.newexton;
  * limitations under the License.
  */
 
+import com.google.gson.internal.LinkedTreeMap;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.Permission;
@@ -36,7 +37,9 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static net.dv8tion.jda.api.interactions.commands.OptionType.*;
@@ -57,22 +60,22 @@ public class NewExtonBot extends ListenerAdapter
         CommandListUpdateAction commands = jda.updateCommands();
 
         // Moderation commands with required options
-        commands.addCommands(
-                Commands.slash("ban", "Ban a user from this server. Requires permission to ban users.")
-                        .addOptions(new OptionData(USER, "user", "The user to ban") // USER type allows to include members of the server or other users by id
-                                .setRequired(true)) // This command requires a parameter
-                        .addOptions(new OptionData(INTEGER, "del_days", "Delete messages from the past days.") // This is optional
-                                .setRequiredRange(0, 7)) // Only allow values between 0 and 7 (inclusive)
-                        .addOptions(new OptionData(STRING, "reason", "The ban reason to use (default: Banned by <user>)")) // optional reason
-                        .setGuildOnly(true) // This way the command can only be executed from a guild, and not the DMs
-                        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.BAN_MEMBERS)) // Only members with the BAN_MEMBERS permission are going to see this command
-        );
+//        commands.addCommands(
+//                Commands.slash("ban", "Ban a user from this server. Requires permission to ban users.")
+//                        .addOptions(new OptionData(USER, "user", "The user to ban") // USER type allows to include members of the server or other users by id
+//                                .setRequired(true)) // This command requires a parameter
+//                        .addOptions(new OptionData(INTEGER, "del_days", "Delete messages from the past days.") // This is optional
+//                                .setRequiredRange(0, 7)) // Only allow values between 0 and 7 (inclusive)
+//                        .addOptions(new OptionData(STRING, "reason", "The ban reason to use (default: Banned by <user>)")) // optional reason
+//                        .setGuildOnly(true) // This way the command can only be executed from a guild, and not the DMs
+//                        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.BAN_MEMBERS)) // Only members with the BAN_MEMBERS permission are going to see this command
+//        );
 
         // Simple reply commands
-        commands.addCommands(
-                Commands.slash("say", "Makes the bot say what you tell it to")
-                        .addOption(STRING, "content", "What the bot should say", true) // you can add required options like this too
-        );
+//        commands.addCommands(
+//                Commands.slash("say", "Makes the bot say what you tell it to")
+//                        .addOption(STRING, "content", "What the bot should say", true) // you can add required options like this too
+//        );
 
         // Simple reply commands
         commands.addCommands(
@@ -80,12 +83,12 @@ public class NewExtonBot extends ListenerAdapter
                         //.addOption(STRING, "content", "What the bot should say", true) // you can add required options like this too
         );
 
-        commands.addCommands(
-                Commands.slash("prune", "Prune messages from this channel")
-                        .addOption(INTEGER, "amount", "How many messages to prune (Default 100)") // simple optional argument
-                        .setGuildOnly(true)
-                        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MESSAGE_MANAGE))
-        );
+//        commands.addCommands(
+//                Commands.slash("prune", "Prune messages from this channel")
+//                        .addOption(INTEGER, "amount", "How many messages to prune (Default 100)") // simple optional argument
+//                        .setGuildOnly(true)
+//                        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MESSAGE_MANAGE))
+//        );
 
         // Send the new set of commands to discord, this will override any existing global commands with the new set provided here
         commands.queue();
@@ -100,22 +103,56 @@ public class NewExtonBot extends ListenerAdapter
             return;
         switch (event.getName())
         {
-            case "ban":
-                Member member = event.getOption("user").getAsMember(); // the "user" option is required, so it doesn't need a null-check here
-                User user = event.getOption("user").getAsUser();
-                ban(event, user, member);
-                break;
-            case "say":
-                say(event, event.getOption("content").getAsString()); // content is required so no null-check here
-                break;
-            case "prune": // 2 stage command with a button prompt
-                prune(event);
-                break;
+//            case "ban":
+//                Member member = event.getOption("user").getAsMember(); // the "user" option is required, so it doesn't need a null-check here
+//                User user = event.getOption("user").getAsUser();
+//                ban(event, user, member);
+//                break;
+//            case "say":
+//                say(event, event.getOption("content").getAsString()); // content is required so no null-check here
+//                break;
+//            case "prune": // 2 stage command with a button prompt
+//                prune(event);
+//                break;
             case "minecraft":
                 try {
                     mcServerData = downloadMCData();
-                    createTextChannel(event.getMember(),"\uD835\uDE1A\uD835\uDE26\uD835\uDE33\uD835\uDE38\uD835\uDE26\uD835\uDE33 \uD835\uDE14\uD835\uDE0A:" + mcServerData.online);
-                    createTextChannel(event.getMember(),"Liczba graczy: " + mcServerData.players.now + "/" + mcServerData.players.max);
+//                    createTextChannel(event.getMember(),"\uD835\uDE1A\uD835\uDE26\uD835\uDE33\uD835\uDE38\uD835\uDE26\uD835\uDE33 \uD835\uDE14\uD835\uDE0A:" + mcServerData.online);
+//                    createTextChannel(event.getMember(),"Liczba graczy: " + mcServerData.players.now + "/" + mcServerData.players.max);
+
+                    //FAIL
+                    if(Objects.equals(mcServerData.status, "failure")){
+                        String reply = "Nie udało się pobrać statusu serwera.";
+                        event.reply(reply).queue();
+                        break;
+                    }
+
+                    //CORRECT REPLY
+                    StringBuilder reply = new StringBuilder();
+                    if(mcServerData.online){
+                        reply.append("Serwer MC: Online\n");
+
+                    } else {
+                        reply.append("Serwer MC: Offline\n");
+                    }
+                    reply.append("Liczba graczy: ").append(mcServerData.players.now).append("/").append(mcServerData.players.max);
+
+                    if(mcServerData.players.now > 0){
+                        reply.append("\nAktywni gracze: ");
+                    }
+
+                    int noOfPlayers = mcServerData.players.sample.size();
+                    for(int i = 0; i < noOfPlayers; i++){
+                        LinkedTreeMap player = (LinkedTreeMap) mcServerData.players.sample.get(i);
+                        if(i<noOfPlayers-1){
+                            reply.append(player.get("name")).append(", ");
+                        }
+                        else{
+                            reply.append(player.get("name"));
+                        }
+                    }
+                    event.reply(reply.toString()).queue();
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
