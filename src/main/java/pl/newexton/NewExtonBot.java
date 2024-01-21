@@ -53,7 +53,7 @@ public class NewExtonBot extends ListenerAdapter
         System.out.println("NewExtonBot uruchomiony poprawnie.");
         mcServerData = downloadMCData();
 
-        JDA jda = JDABuilder.createLight("MTA0NDAwOTE1NDMxNjA4MzI1MQ.GQIqkM.C182I02ZDQisxXzM6BJ_u6WWnXkVmfcE_NvGgc", EnumSet.noneOf(GatewayIntent.class)) // slash commands don't need any intents
+        JDA jda = JDABuilder.createLight("xxxxx", EnumSet.noneOf(GatewayIntent.class)) // slash commands don't need any intents
                 .addEventListeners(new NewExtonBot())
                 .build();
 
